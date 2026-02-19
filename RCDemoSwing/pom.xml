@@ -34,15 +34,15 @@
             <artifactId>commons-math3</artifactId>
         </dependency>
         <dependency>
-            <groupId>java3d</groupId>
-            <artifactId>j3d-core</artifactId>
+            <groupId>org.scijava</groupId>
+            <artifactId>j3dcore</artifactId>
         </dependency>
         <dependency>
-            <groupId>java3d</groupId>
-            <artifactId>j3d-core-utils</artifactId>
+            <groupId>org.scijava</groupId>
+            <artifactId>j3dutils</artifactId>
         </dependency>
         <dependency>
-            <groupId>java3d</groupId>
+            <groupId>org.scijava</groupId>
             <artifactId>vecmath</artifactId>
         </dependency>
     </dependencies>

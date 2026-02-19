@@ -18,10 +18,10 @@ package de.tubs.wire.graphics.java3d;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.media.j3d.BranchGroup;
-import javax.media.j3d.Node;
-import javax.media.j3d.TransformGroup;
-import javax.vecmath.Vector3d;
+import org.scijava.java3d.BranchGroup;
+import org.scijava.java3d.Node;
+import org.scijava.java3d.TransformGroup;
+import org.scijava.vecmath.Vector3d;
 import de.tubs.wire.simulator.math.RHS;
 import de.tubs.wire.graphics.camera.CameraFactory;
 import de.tubs.wire.simulator.Observer;

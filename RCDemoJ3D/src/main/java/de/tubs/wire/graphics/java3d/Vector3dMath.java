@@ -16,7 +16,7 @@
  */
 package de.tubs.wire.graphics.java3d;
 
-import javax.vecmath.Vector3d;
+import org.scijava.vecmath.Vector3d;
 import de.tubs.wire.simulator.math.VectorMath;
 
 /**
@@ -32,12 +32,12 @@ class Vector3dMath extends VectorMath<Vector3d> {
 
     @Override
     public Vector3d copy(Vector3d v) {
-        return new Vector3d(v.x, v.y, v.z);
+        return new Vector3d(v.getX(), v.getY(), v.getZ());
     }
 
     @Override
     public double[] toDouble(Vector3d v) {
-        return new double[]{v.x, v.y, v.z};
+        return new double[]{v.getX(), v.getY(), v.getZ()};
     }
 
     @Override

@@ -19,22 +19,22 @@ package de.tubs.wire.graphics.java3d;
 import de.tubs.wire.graphics.ViewController;
 import java.util.ArrayList;
 import java.util.List;
-import javax.media.j3d.BranchGroup;
-import javax.media.j3d.Canvas3D;
-import javax.media.j3d.Locale;
-import javax.media.j3d.PhysicalBody;
-import javax.media.j3d.PhysicalEnvironment;
-import javax.media.j3d.TransformGroup;
-import javax.media.j3d.View;
-import javax.media.j3d.ViewPlatform;
-import javax.media.j3d.VirtualUniverse;
+import org.scijava.java3d.BranchGroup;
+import org.scijava.java3d.Canvas3D;
+import org.scijava.java3d.Locale;
+import org.scijava.java3d.PhysicalBody;
+import org.scijava.java3d.PhysicalEnvironment;
+import org.scijava.java3d.TransformGroup;
+import org.scijava.java3d.View;
+import org.scijava.java3d.ViewPlatform;
+import org.scijava.java3d.VirtualUniverse;
 import de.tubs.wire.graphics.camera.CameraFactory;
 import de.tubs.wire.simulator.track.TrackInformation;
 import de.tubs.wire.graphics.camera.Camera;
 import de.tubs.wire.graphics.camera.CameraView;
-import javax.media.j3d.Transform3D;
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
+import org.scijava.java3d.Transform3D;
+import org.scijava.vecmath.Point3d;
+import org.scijava.vecmath.Vector3d;
 
 
 /**

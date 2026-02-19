@@ -1,12 +1,12 @@
 package de.tubs.wire.graphics.java3d;
 
-import javax.media.j3d.Appearance;
-import javax.media.j3d.PolygonAttributes;
-import javax.media.j3d.QuadArray;
-import javax.media.j3d.Shape3D;
-import javax.media.j3d.TransparencyAttributes;
-import javax.vecmath.Color3f;
-import javax.vecmath.Color4f;
+import org.scijava.java3d.Appearance;
+import org.scijava.java3d.PolygonAttributes;
+import org.scijava.java3d.QuadArray;
+import org.scijava.java3d.Shape3D;
+import org.scijava.java3d.TransparencyAttributes;
+import org.scijava.vecmath.Color3f;
+import org.scijava.vecmath.Color4f;
 
 /**
  * Simple color-per-vertex cube with a different color for each face

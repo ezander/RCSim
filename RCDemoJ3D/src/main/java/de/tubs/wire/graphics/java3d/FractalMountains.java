@@ -1,18 +1,18 @@
 package de.tubs.wire.graphics.java3d;
 
-import com.sun.j3d.utils.geometry.GeometryInfo;
-import com.sun.j3d.utils.geometry.NormalGenerator;
+import org.scijava.java3d.utils.geometry.GeometryInfo;
+import org.scijava.java3d.utils.geometry.NormalGenerator;
 import java.util.Random;
-import javax.media.j3d.Appearance;
-import javax.media.j3d.GeometryArray;
-import javax.media.j3d.IndexedQuadArray;
-import javax.media.j3d.Material;
-import javax.media.j3d.QuadArray;
-import javax.media.j3d.Shape3D;
-import javax.vecmath.Color3f;
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-import javax.vecmath.Vector3f;
+import org.scijava.java3d.Appearance;
+import org.scijava.java3d.GeometryArray;
+import org.scijava.java3d.IndexedQuadArray;
+import org.scijava.java3d.Material;
+import org.scijava.java3d.QuadArray;
+import org.scijava.java3d.Shape3D;
+import org.scijava.vecmath.Color3f;
+import org.scijava.vecmath.Point3d;
+import org.scijava.vecmath.Vector3d;
+import org.scijava.vecmath.Vector3f;
 import de.tubs.wire.graphics.terrain.DiamonSquareGenerator;
 import de.tubs.wire.graphics.terrain.TerrainGenerator;
 
