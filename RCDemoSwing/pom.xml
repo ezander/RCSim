@@ -65,6 +65,9 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>RCSwing</mainClass>
+                    <arguments>
+                        <jvmArg>--add-exports=java.desktop/sun.awt=ALL-UNNAMED</jvmArg>
+                    </arguments>
                 </configuration>
             </plugin>
         </plugins>

@@ -60,6 +60,9 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>de.tubs.wire.rcdemoj3d.RCJava3d</mainClass>
+                    <arguments>
+                        <jvmArg>--add-exports=java.desktop/sun.awt=ALL-UNNAMED</jvmArg>
+                    </arguments>
                 </configuration>
             </plugin>
         </plugins>
