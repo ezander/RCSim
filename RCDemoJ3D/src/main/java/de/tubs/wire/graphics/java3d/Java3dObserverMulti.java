@@ -52,24 +52,6 @@ public class Java3dObserverMulti extends Java3dObserverBase {
         
         ViewInfo viewinfo = new ViewInfo(canvas);
         views.add(viewinfo);
-
-        viewinfo.viewBranch = new BranchGroup();
-        viewinfo.glCamera = new TransformGroup();
-        viewinfo.glCamera.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-        viewinfo.viewBranch.addChild(viewinfo.glCamera);
-        ViewPlatform viewPlatform = new ViewPlatform();
-        viewinfo.glCamera.addChild(viewPlatform);
-        
-        
-        View view = new View();
-        view.addCanvas3D(canvas);
-        //View xview = canvas.getView();
-        view.setPhysicalBody(new PhysicalBody());
-        view.setPhysicalEnvironment(new PhysicalEnvironment());
-        view.attachViewPlatform(viewPlatform);
-        view.setBackClipDistance(1000);
-        view.setSceneAntialiasingEnable(true);
-        //assert canvas.getSceneAntialiasingAvailable();
         // setCamNum(camNum);
         return viewinfo;
     }
@@ -84,16 +66,24 @@ public class Java3dObserverMulti extends Java3dObserverBase {
         world = createWorld();
         branchGroup = new BranchGroup();
         branchGroup.addChild(world);
+        branchGroup.compile();
 
         // Create the universe and add the group of objects
-        if (universe == null) {
-            universe = new VirtualUniverse();
-            Locale locale = new Locale(universe);
-            locale.addBranchGraph(branchGroup);
-            for (ViewInfo view : views) {
-                locale.addBranchGraph(view.viewBranch);
-                view.setCamNum(view.getCamNum());
-            }
+        for (ViewInfo view : views) {
+            //view.canvas.stopRenderer();
+            view.init();
+        }
+
+        universe = new VirtualUniverse();
+        Locale locale = new Locale(universe);
+        for (ViewInfo view : views) {
+            locale.addBranchGraph(view.viewBranch);
+            view.setCamNum(view.getCamNum());
+        }
+        locale.addBranchGraph(branchGroup);
+
+        for (ViewInfo view : views) {
+            view.canvas.startRenderer();
         }
     }
     
@@ -102,6 +92,7 @@ public class Java3dObserverMulti extends Java3dObserverBase {
         for (ViewInfo view : views) {
             view.canvas.stopRenderer();
         }
+
         super.notify(t, y);
         double s = y[0];
         double dsdt = y[1];
@@ -114,8 +105,10 @@ public class Java3dObserverMulti extends Java3dObserverBase {
                     new Point3d(camView.getTarget()), camView.getUp());
             transform.invert();
             view.glCamera.setTransform(transform);
-            view.canvas.startRenderer();
+        }
 
+        for (ViewInfo view : views) {
+            view.canvas.startRenderer();
         }
     }
     
@@ -127,24 +120,42 @@ public class Java3dObserverMulti extends Java3dObserverBase {
         
         Camera<Vector3d> camera;
         BranchGroup viewBranch;
+        View view;
         
         public ViewInfo(Canvas3D canvas) {
             this.canvas = canvas;
+        }
+
+        public void init() {
+            if(view != null) {
+                view.removeCanvas3D(canvas);
+            }
+            view = new View();
+            view.addCanvas3D(canvas);
+            view.setPhysicalBody(new PhysicalBody());
+            view.setPhysicalEnvironment(new PhysicalEnvironment());
+            view.setBackClipDistance(1000);
+            view.setSceneAntialiasingEnable(true);
+            //assert canvas.getSceneAntialiasingAvailable();
+
+            viewBranch = new BranchGroup();
+            glCamera = new TransformGroup();
+            glCamera.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+            ViewPlatform viewPlatform = new ViewPlatform();
+            glCamera.addChild(viewPlatform);
+            viewBranch.addChild(glCamera);
+
+            view.attachViewPlatform(viewPlatform);
+
+            camera = CameraFactory.buildCamera(camList.get(camNum), helper);
+            camera.init(track);
+
         }
         
         public Camera<Vector3d> getCamera() {
             return camera;
         }
-        
-        public void setCanvas(Canvas3D canvas) {
-            assert this.canvas == null;
-            this.canvas = canvas;
-        }
-        
-        public Canvas3D getCanvas() {
-            return canvas;
-        }
-        
+
         public int getCamNum() {
             return camNum;
         }

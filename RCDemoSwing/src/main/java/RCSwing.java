@@ -1,5 +1,6 @@
 
 
+import org.scijava.java3d.View;
 import org.scijava.java3d.utils.universe.SimpleUniverse;
 import de.tubs.wire.graphics.java3d.Java3dObserverBase;
 import de.tubs.wire.graphics.java3d.Java3dObserverMulti;
@@ -40,47 +41,38 @@ public class RCSwing extends javax.swing.JFrame {
         initMulti();
     }
 
-    
-    
+    Canvas3D createCanvas3d() {
+        //GraphicsConfiguration config2= java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().
+        //        getDefaultScreenDevice().
+        //        //getDefaultConfiguration();
+        //        getBestConfiguration(gct3D);
+        //GraphicsConfigTemplate3D gct3D= new GraphicsConfigTemplate3D();
+        //gct3D.setSceneAntialiasing(GraphicsConfigTemplate3D.PREFERRED);
+        //gct3D.setSceneAntialiasing(GraphicsConfigTemplate3D.REQUIRED);
+        //gct3D.setSceneAntialiasing(GraphicsConfigTemplate3D.UNNECESSARY);
+        GraphicsConfiguration config = SimpleUniverse.getPreferredConfiguration();
+
+        Dimension minimumSize = new Dimension(10, 10);
+        Canvas3D canvas = new Canvas3D(config);
+        canvas.setDoubleBufferEnable(true);
+        canvas.setMinimumSize(minimumSize);
+        return canvas;
+    }
+
     final void initMulti() {
         //setLayout(new BorderLayout());
-        Dimension minimumSize = new Dimension(10, 10);
-        
-        GraphicsConfiguration config = SimpleUniverse.getPreferredConfiguration();
-        //config.set
-        
-        
-        GraphicsConfigTemplate3D gct3D= new GraphicsConfigTemplate3D();
-        gct3D.setSceneAntialiasing(GraphicsConfigTemplate3D.PREFERRED);
-        gct3D.setSceneAntialiasing(GraphicsConfigTemplate3D.REQUIRED);
-        gct3D.setSceneAntialiasing(GraphicsConfigTemplate3D.UNNECESSARY);
-        GraphicsConfiguration config2= java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().
-                getDefaultScreenDevice().
-                //getDefaultConfiguration();
-                getBestConfiguration(gct3D);
-        
-        Canvas3D canvas1 = new Canvas3D(config2);
-        canvas1.setDoubleBufferEnable(true);
-        canvas1.setMinimumSize(minimumSize);
 
-        Canvas3D canvas2 = new Canvas3D(config);
-        canvas2.setDoubleBufferEnable(true);
-        canvas2.setMinimumSize(minimumSize);
-        
-        jSplitPane1.setLeftComponent(canvas2);
-        jSplitPane1.setRightComponent(canvas1);
-        canvas2.requestFocus();
-        
-        //JButton but = new JButton("foo");
-        //jSplitPane1.setRightComponent(but);
+        Canvas3D canvas1 = createCanvas3d();
+        Canvas3D canvas2 = createCanvas3d();
 
-        
+        jSplitPane1.setLeftComponent(canvas1);
+        jSplitPane1.setRightComponent(canvas2);
+
         setSize(160 * 6, 90 * 6);
         jSplitPane1.setDividerLocation(0.5);
         jSplitPane1.setResizeWeight(0.5);
         jSplitPane1.setOneTouchExpandable(true);
-        
-        
+
         Java3dObserverMulti observer = new Java3dObserverMulti();
         java3dObserver = observer;
         Java3dObserverMulti.ViewInfo view1 = observer.addView(canvas1);
@@ -90,7 +82,7 @@ public class RCSwing extends javax.swing.JFrame {
 
         sim = new TrackSimulator();
         sim.addObserver(observer);
-        sim.addObserver(new TextBasedObserver());
+        //sim.addObserver(new TextBasedObserver());
         canvas1.addKeyListener(DefaultKeyMapping.setDefaultKeys(new AWTKeyProcessor(), sim, view1, false) );
         canvas2.addKeyListener(DefaultKeyMapping.setDefaultKeys(new AWTKeyProcessor(), sim, view2, false) );
     }
@@ -241,6 +233,7 @@ public class RCSwing extends javax.swing.JFrame {
     }
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
+        lastPath = "/home/ezander/projects/wire/teaching/sep/RCSim/Simulator/src/main/resources/tracks";
         JFileChooser chooser = new JFileChooser(lastPath);
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "RollerCoaster files", "rct");
