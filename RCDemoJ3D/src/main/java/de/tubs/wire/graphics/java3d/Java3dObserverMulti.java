@@ -19,22 +19,22 @@ package de.tubs.wire.graphics.java3d;
 import de.tubs.wire.graphics.ViewController;
 import java.util.ArrayList;
 import java.util.List;
-import org.scijava.java3d.BranchGroup;
-import org.scijava.java3d.Canvas3D;
-import org.scijava.java3d.Locale;
-import org.scijava.java3d.PhysicalBody;
-import org.scijava.java3d.PhysicalEnvironment;
-import org.scijava.java3d.TransformGroup;
-import org.scijava.java3d.View;
-import org.scijava.java3d.ViewPlatform;
-import org.scijava.java3d.VirtualUniverse;
+import org.jogamp.java3d.BranchGroup;
+import org.jogamp.java3d.Canvas3D;
+import org.jogamp.java3d.Locale;
+import org.jogamp.java3d.PhysicalBody;
+import org.jogamp.java3d.PhysicalEnvironment;
+import org.jogamp.java3d.TransformGroup;
+import org.jogamp.java3d.View;
+import org.jogamp.java3d.ViewPlatform;
+import org.jogamp.java3d.VirtualUniverse;
 import de.tubs.wire.graphics.camera.CameraFactory;
 import de.tubs.wire.simulator.track.TrackInformation;
 import de.tubs.wire.graphics.camera.Camera;
 import de.tubs.wire.graphics.camera.CameraView;
-import org.scijava.java3d.Transform3D;
-import org.scijava.vecmath.Point3d;
-import org.scijava.vecmath.Vector3d;
+import org.jogamp.java3d.Transform3D;
+import org.jogamp.vecmath.Point3d;
+import org.jogamp.vecmath.Vector3d;
 
 
 /**
@@ -51,7 +51,7 @@ public class Java3dObserverMulti extends Java3dObserverBase {
         assert universe == null;
         
         ViewInfo viewinfo = new ViewInfo(canvas);
-        views.add(viewinfo);
+        views.addFirst(viewinfo);
         // setCamNum(camNum);
         return viewinfo;
     }
@@ -65,26 +65,31 @@ public class Java3dObserverMulti extends Java3dObserverBase {
         //
         world = createWorld();
         branchGroup = new BranchGroup();
+        branchGroup.setCapability(BranchGroup.ALLOW_DETACH);
         branchGroup.addChild(world);
         branchGroup.compile();
 
         // Create the universe and add the group of objects
         for (ViewInfo view : views) {
-            //view.canvas.stopRenderer();
             view.init();
+            view.canvas.stopRenderer();
         }
 
         universe = new VirtualUniverse();
         Locale locale = new Locale(universe);
+        locale.addBranchGraph(branchGroup);
         for (ViewInfo view : views) {
             locale.addBranchGraph(view.viewBranch);
             view.setCamNum(view.getCamNum());
         }
-        locale.addBranchGraph(branchGroup);
 
         for (ViewInfo view : views) {
+            view.canvas.validate();
             view.canvas.startRenderer();
         }
+
+        locale.removeBranchGraph(branchGroup);
+        locale.addBranchGraph(branchGroup);
     }
     
     @Override

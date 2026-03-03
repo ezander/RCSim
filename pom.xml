@@ -23,10 +23,11 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
         <commons-math3.version>3.5</commons-math3.version>
-        <j3d.version>1.6.0-scijava-2</j3d.version>
+        <j3d.version>1.7.2</j3d.version>
+        <jogl.version>2.5.0</jogl.version>
         <javafx.version>11.0.2</javafx.version>
         <junit.version>4.12</junit.version>
     </properties>
@@ -39,19 +40,43 @@
                 <version>${commons-math3.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.scijava</groupId>
-                <artifactId>j3dcore</artifactId>
+                <groupId>org.jogamp.java3d</groupId>
+                <artifactId>java3d-core</artifactId>
                 <version>${j3d.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.scijava</groupId>
-                <artifactId>j3dutils</artifactId>
+                <groupId>org.jogamp.java3d</groupId>
+                <artifactId>java3d-utils</artifactId>
                 <version>${j3d.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.scijava</groupId>
+                <groupId>org.jogamp.java3d</groupId>
                 <artifactId>vecmath</artifactId>
                 <version>${j3d.version}</version>
+            </dependency>
+            <!-- JOGL dependencies with native libraries -->
+            <dependency>
+                <groupId>org.jogamp.gluegen</groupId>
+                <artifactId>gluegen-rt</artifactId>
+                <version>${jogl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jogamp.jogl</groupId>
+                <artifactId>jogl-all</artifactId>
+                <version>${jogl.version}</version>
+            </dependency>
+            <!-- Native libraries for Linux x86_64 -->
+            <dependency>
+                <groupId>org.jogamp.gluegen</groupId>
+                <artifactId>gluegen-rt</artifactId>
+                <version>${jogl.version}</version>
+                <classifier>natives-linux-amd64</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.jogamp.jogl</groupId>
+                <artifactId>jogl-all</artifactId>
+                <version>${jogl.version}</version>
+                <classifier>natives-linux-amd64</classifier>
             </dependency>
             <dependency>
                 <groupId>org.openjfx</groupId>
@@ -72,6 +97,17 @@
         </dependencies>
     </dependencyManagement>
 
+    <repositories>
+        <repository>
+            <id>jogamp-java3d</id>
+            <url>https://jogamp.org/deployment/maven-java3d/</url>
+        </repository>
+        <repository>
+            <id>jogamp</id>
+            <url>https://jogamp.org/deployment/maven/</url>
+        </repository>
+    </repositories>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -79,16 +115,21 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>3.2.0</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.1</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <mainClass>${exec.mainClass}</mainClass>
+                            </manifest>
+                        </archive>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
                     <version>3.1.0</version>
+                    <configuration>
+                        <mainClass>${exec.mainClass}</mainClass>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

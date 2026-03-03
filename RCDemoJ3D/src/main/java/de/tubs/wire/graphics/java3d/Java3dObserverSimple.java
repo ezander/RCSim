@@ -17,15 +17,15 @@
 package de.tubs.wire.graphics.java3d;
 
 import de.tubs.wire.graphics.ViewController;
-import org.scijava.java3d.utils.universe.SimpleUniverse;
-import org.scijava.java3d.BranchGroup;
-import org.scijava.java3d.Canvas3D;
-import org.scijava.java3d.Transform3D;
-import org.scijava.java3d.TransformGroup;
-import org.scijava.java3d.View;
+import org.jogamp.java3d.utils.universe.SimpleUniverse;
+import org.jogamp.java3d.BranchGroup;
+import org.jogamp.java3d.Canvas3D;
+import org.jogamp.java3d.Transform3D;
+import org.jogamp.java3d.TransformGroup;
+import org.jogamp.java3d.View;
 import javax.swing.SwingUtilities;
-import org.scijava.vecmath.Point3d;
-import org.scijava.vecmath.Vector3d;
+import org.jogamp.vecmath.Point3d;
+import org.jogamp.vecmath.Vector3d;
 import de.tubs.wire.graphics.camera.CameraFactory;
 import de.tubs.wire.graphics.camera.CameraView;
 import de.tubs.wire.simulator.track.TrackInformation;

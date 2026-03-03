@@ -16,10 +16,10 @@
  */
 package de.tubs.wire.graphics.java3d;
 
-import org.scijava.java3d.Node;
-import org.scijava.java3d.Transform3D;
-import org.scijava.java3d.TransformGroup;
-import org.scijava.vecmath.Vector3d;
+import org.jogamp.java3d.Node;
+import org.jogamp.java3d.Transform3D;
+import org.jogamp.java3d.TransformGroup;
+import org.jogamp.vecmath.Vector3d;
 import de.tubs.wire.simulator.track.TrackHelper;
 
 /**

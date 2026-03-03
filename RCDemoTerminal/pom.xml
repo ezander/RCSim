@@ -13,6 +13,10 @@
     <artifactId>rcsim-demo-terminal</artifactId>
     <name>RCSim Demo Terminal</name>
 
+    <properties>
+        <exec.mainClass>de.tubs.wire.rcterm.RCTerminal</exec.mainClass>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>de.tubs.wire</groupId>
@@ -25,26 +29,4 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>de.tubs.wire.rcterm.RCTerminal</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>de.tubs.wire.rcterm.RCTerminal</mainClass>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

@@ -16,7 +16,7 @@
  */
 package de.tubs.wire.graphics.java3d;
 
-import org.scijava.vecmath.Vector3d;
+import org.jogamp.vecmath.Vector3d;
 import de.tubs.wire.simulator.math.VectorMath;
 
 /**

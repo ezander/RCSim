@@ -13,6 +13,10 @@
     <artifactId>rcsim-demo-jfx</artifactId>
     <name>RCSim Demo JavaFX</name>
 
+    <properties>
+        <exec.mainClass>de.tubs.wire.rcdemo.RCJavaFX</exec.mainClass>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>de.tubs.wire</groupId>
@@ -38,26 +42,4 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>de.tubs.wire.rcdemo.RCJavaFX</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>de.tubs.wire.rcdemo.RCJavaFX</mainClass>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

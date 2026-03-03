@@ -17,21 +17,21 @@
 package de.tubs.wire.graphics.java3d;
 
 import de.tubs.wire.graphics.WorldCreator;
-import org.scijava.java3d.AmbientLight;
-import org.scijava.java3d.Appearance;
-import org.scijava.java3d.BoundingSphere;
-import org.scijava.java3d.DirectionalLight;
-import org.scijava.java3d.GeometryArray;
-import org.scijava.java3d.Light;
-import org.scijava.java3d.Material;
-import org.scijava.java3d.Node;
-import org.scijava.java3d.QuadArray;
-import org.scijava.java3d.Shape3D;
-import org.scijava.java3d.TransformGroup;
-import org.scijava.vecmath.Color3f;
-import org.scijava.vecmath.Point3d;
-import org.scijava.vecmath.Vector3d;
-import org.scijava.vecmath.Vector3f;
+import org.jogamp.java3d.AmbientLight;
+import org.jogamp.java3d.Appearance;
+import org.jogamp.java3d.BoundingSphere;
+import org.jogamp.java3d.DirectionalLight;
+import org.jogamp.java3d.GeometryArray;
+import org.jogamp.java3d.Light;
+import org.jogamp.java3d.Material;
+import org.jogamp.java3d.Node;
+import org.jogamp.java3d.QuadArray;
+import org.jogamp.java3d.Shape3D;
+import org.jogamp.java3d.TransformGroup;
+import org.jogamp.vecmath.Color3f;
+import org.jogamp.vecmath.Point3d;
+import org.jogamp.vecmath.Vector3d;
+import org.jogamp.vecmath.Vector3f;
 import de.tubs.wire.simulator.math.RHS;
 import de.tubs.wire.simulator.track.TrackInformation;
 import de.tubs.wire.simulator.track.Track;
@@ -48,7 +48,7 @@ extends WorldCreator<Vector3d, Node, TransformGroup> {
         TransformGroup group = new TransformGroup();
         //group.addChild(super.createGround(trackInfo));
         group.addChild(new CheckeredPlane(CheckeredPlane.COLORING_RANDOM));
-        //group.addChild(new FractalMountains());
+        group.addChild(new FractalMountains());
         return group;
     }
 

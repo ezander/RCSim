@@ -1,7 +1,7 @@
 
 
-import org.scijava.java3d.View;
-import org.scijava.java3d.utils.universe.SimpleUniverse;
+import org.jogamp.java3d.View;
+import org.jogamp.java3d.utils.universe.SimpleUniverse;
 import de.tubs.wire.graphics.java3d.Java3dObserverBase;
 import de.tubs.wire.graphics.java3d.Java3dObserverMulti;
 import de.tubs.wire.graphics.java3d.Java3dObserverSimple;
@@ -14,8 +14,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.io.File;
-import org.scijava.java3d.Canvas3D;
-import org.scijava.java3d.GraphicsConfigTemplate3D;
+import org.jogamp.java3d.Canvas3D;
+import org.jogamp.java3d.GraphicsConfigTemplate3D;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPopupMenu;
@@ -61,7 +61,6 @@ public class RCSwing extends javax.swing.JFrame {
 
     final void initMulti() {
         //setLayout(new BorderLayout());
-
         Canvas3D canvas1 = createCanvas3d();
         Canvas3D canvas2 = createCanvas3d();
 

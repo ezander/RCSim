@@ -13,6 +13,10 @@
     <artifactId>rcsim-demo-j3d</artifactId>
     <name>RCSim Demo Java3D</name>
 
+    <properties>
+        <exec.mainClass>de.tubs.wire.rcdemoj3d.RCJava3d</exec.mainClass>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>de.tubs.wire</groupId>
@@ -29,39 +33,36 @@
             <artifactId>commons-math3</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.scijava</groupId>
-            <artifactId>j3dcore</artifactId>
+            <groupId>org.jogamp.java3d</groupId>
+            <artifactId>java3d-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.scijava</groupId>
-            <artifactId>j3dutils</artifactId>
+            <groupId>org.jogamp.java3d</groupId>
+            <artifactId>java3d-utils</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.scijava</groupId>
+            <groupId>org.jogamp.java3d</groupId>
             <artifactId>vecmath</artifactId>
+        </dependency>
+        <!-- JOGL native libraries -->
+        <dependency>
+            <groupId>org.jogamp.gluegen</groupId>
+            <artifactId>gluegen-rt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jogamp.jogl</groupId>
+            <artifactId>jogl-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jogamp.gluegen</groupId>
+            <artifactId>gluegen-rt</artifactId>
+            <classifier>natives-linux-amd64</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.jogamp.jogl</groupId>
+            <artifactId>jogl-all</artifactId>
+            <classifier>natives-linux-amd64</classifier>
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>de.tubs.wire.rcdemoj3d.RCJava3d</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>de.tubs.wire.rcdemoj3d.RCJava3d</mainClass>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>
