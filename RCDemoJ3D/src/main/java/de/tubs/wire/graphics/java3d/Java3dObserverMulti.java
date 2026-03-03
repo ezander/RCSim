@@ -17,24 +17,18 @@
 package de.tubs.wire.graphics.java3d;
 
 import de.tubs.wire.graphics.ViewController;
-import java.util.ArrayList;
-import java.util.List;
-import org.jogamp.java3d.BranchGroup;
-import org.jogamp.java3d.Canvas3D;
-import org.jogamp.java3d.Locale;
-import org.jogamp.java3d.PhysicalBody;
-import org.jogamp.java3d.PhysicalEnvironment;
-import org.jogamp.java3d.TransformGroup;
-import org.jogamp.java3d.View;
-import org.jogamp.java3d.ViewPlatform;
-import org.jogamp.java3d.VirtualUniverse;
-import de.tubs.wire.graphics.camera.CameraFactory;
-import de.tubs.wire.simulator.track.TrackInformation;
 import de.tubs.wire.graphics.camera.Camera;
+import de.tubs.wire.graphics.camera.CameraFactory;
 import de.tubs.wire.graphics.camera.CameraView;
-import org.jogamp.java3d.Transform3D;
+import de.tubs.wire.simulator.TrackSimulator;
+import de.tubs.wire.simulator.track.Track;
+import de.tubs.wire.simulator.track.TrackInformation;
+import org.jogamp.java3d.*;
 import org.jogamp.vecmath.Point3d;
 import org.jogamp.vecmath.Vector3d;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -45,13 +39,13 @@ public class Java3dObserverMulti extends Java3dObserverBase {
     
     VirtualUniverse universe;
     List<ViewInfo> views = new ArrayList<>(2);
-
+    public TrackSimulator sim;
     
     public ViewInfo addView(Canvas3D canvas) {
         assert universe == null;
         
         ViewInfo viewinfo = new ViewInfo(canvas);
-        views.addFirst(viewinfo);
+        views.add(viewinfo);
         // setCamNum(camNum);
         return viewinfo;
     }
@@ -67,6 +61,23 @@ public class Java3dObserverMulti extends Java3dObserverBase {
         branchGroup = new BranchGroup();
         branchGroup.setCapability(BranchGroup.ALLOW_DETACH);
         branchGroup.addChild(world);
+
+        class UpdateBehavior extends Behavior {
+            //private final WakeupCondition wakeup = new WakeupOnElapsedFrames(6);
+            private final WakeupCondition wakeup = new WakeupOnElapsedTime(30);
+
+            public void initialize() {
+                wakeupOn(wakeup);
+            }
+
+            public void processStimulus(java.util.Iterator criteria) {
+                sim.update();
+                wakeupOn(wakeup);
+            }
+        }
+        Behavior behavior = new UpdateBehavior();
+        behavior.setSchedulingBounds(new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 1000.0));
+        branchGroup.addChild(behavior);
         branchGroup.compile();
 
         // Create the universe and add the group of objects
@@ -88,16 +99,10 @@ public class Java3dObserverMulti extends Java3dObserverBase {
             view.canvas.startRenderer();
         }
 
-        locale.removeBranchGraph(branchGroup);
-        locale.addBranchGraph(branchGroup);
     }
     
     @Override
     public void notify(double t, double[] y) {
-        for (ViewInfo view : views) {
-            view.canvas.stopRenderer();
-        }
-
         super.notify(t, y);
         double s = y[0];
         double dsdt = y[1];
@@ -111,14 +116,10 @@ public class Java3dObserverMulti extends Java3dObserverBase {
             transform.invert();
             view.glCamera.setTransform(transform);
         }
-
-        for (ViewInfo view : views) {
-            view.canvas.startRenderer();
-        }
     }
-    
+
     public class ViewInfo implements ViewController {
-        
+
         Canvas3D canvas;
         TransformGroup glCamera;
         int camNum = 0;
@@ -152,13 +153,13 @@ public class Java3dObserverMulti extends Java3dObserverBase {
 
             view.attachViewPlatform(viewPlatform);
 
-            camera = CameraFactory.buildCamera(camList.get(camNum), helper);
-            camera.init(track);
-
+            camera = buildCamera(camNum, helper, track);
         }
-        
-        public Camera<Vector3d> getCamera() {
-            return camera;
+
+        Camera buildCamera(int camNum, TrackHelperJ3d helper, Track track) {
+            var cam = CameraFactory.buildCamera(camList.get(camNum), helper);
+            cam.init(track);
+            return cam;
         }
 
         public int getCamNum() {
@@ -169,8 +170,7 @@ public class Java3dObserverMulti extends Java3dObserverBase {
             int n = camList.size();
             camNum = ((camNumNew % n) + n) % n;
             if (track != null) {
-                camera = CameraFactory.buildCamera(camList.get(camNum), helper);
-                camera.init(track);
+                camera = buildCamera(camNum, helper, track);
             }
         }
         

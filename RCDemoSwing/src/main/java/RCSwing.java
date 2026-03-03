@@ -1,6 +1,6 @@
 
 
-import org.jogamp.java3d.View;
+import org.jogamp.java3d.*;
 import org.jogamp.java3d.utils.universe.SimpleUniverse;
 import de.tubs.wire.graphics.java3d.Java3dObserverBase;
 import de.tubs.wire.graphics.java3d.Java3dObserverMulti;
@@ -14,8 +14,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.io.File;
-import org.jogamp.java3d.Canvas3D;
-import org.jogamp.java3d.GraphicsConfigTemplate3D;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPopupMenu;
@@ -52,7 +50,7 @@ public class RCSwing extends javax.swing.JFrame {
         //gct3D.setSceneAntialiasing(GraphicsConfigTemplate3D.UNNECESSARY);
         GraphicsConfiguration config = SimpleUniverse.getPreferredConfiguration();
 
-        Dimension minimumSize = new Dimension(10, 10);
+        Dimension minimumSize = new Dimension(320, 200);
         Canvas3D canvas = new Canvas3D(config);
         canvas.setDoubleBufferEnable(true);
         canvas.setMinimumSize(minimumSize);
@@ -60,7 +58,6 @@ public class RCSwing extends javax.swing.JFrame {
     }
 
     final void initMulti() {
-        //setLayout(new BorderLayout());
         Canvas3D canvas1 = createCanvas3d();
         Canvas3D canvas2 = createCanvas3d();
 
@@ -76,12 +73,12 @@ public class RCSwing extends javax.swing.JFrame {
         java3dObserver = observer;
         Java3dObserverMulti.ViewInfo view1 = observer.addView(canvas1);
         Java3dObserverMulti.ViewInfo view2 = observer.addView(canvas2);
-        view1.setCamNum(-1);
+        view1.setCamNum(-2);
         view2.setCamNum(-1);
 
         sim = new TrackSimulator();
         sim.addObserver(observer);
-        //sim.addObserver(new TextBasedObserver());
+        observer.sim = sim;
         canvas1.addKeyListener(DefaultKeyMapping.setDefaultKeys(new AWTKeyProcessor(), sim, view1, false) );
         canvas2.addKeyListener(DefaultKeyMapping.setDefaultKeys(new AWTKeyProcessor(), sim, view2, false) );
     }
@@ -220,16 +217,8 @@ public class RCSwing extends javax.swing.JFrame {
 
         sim.setSimulationInfo(trackInfo);
         sim.init();
-        restartTimer();
     }
 
-    protected void restartTimer() {
-        if (timer != null) {
-            timer.stop();
-        }
-        timer = new Timer(10, e -> sim.update());
-        timer.start();
-    }
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         lastPath = "/home/ezander/projects/wire/teaching/sep/RCSim/Simulator/src/main/resources/tracks";
