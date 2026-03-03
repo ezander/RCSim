@@ -66,9 +66,8 @@ RCSim follows a modular, layered architecture with Observer/MVC pattern:
 
 ### Required Software
 
-1. **Java Development Kit (JDK) 8 or later**
+1. **Java Development Kit (JDK) 25**
    - Must include JDK, not just JRE (needs `javac` compiler)
-   - Java 8 recommended for full compatibility
    - Download: [Oracle JDK](https://www.oracle.com/java/technologies/downloads/) or [OpenJDK](https://openjdk.org/)
 
 2. **Apache Maven**
@@ -81,15 +80,15 @@ RCSim follows a modular, layered architecture with Observer/MVC pattern:
 
 ```bash
 sudo apt-get update
-sudo apt-get install -y openjdk-11-jdk maven
+sudo apt-get install -y openjdk-25-jdk maven
 ```
 
 #### Fedora/RHEL/CentOS
 
 ```bash
-sudo dnf install java-11-openjdk-devel maven
+sudo dnf install java-25-openjdk-devel maven
 # or on older systems:
-sudo yum install java-11-openjdk-devel maven
+sudo yum install java-25-openjdk-devel maven
 ```
 
 #### macOS
@@ -97,14 +96,14 @@ sudo yum install java-11-openjdk-devel maven
 Using Homebrew:
 
 ```bash
-brew install openjdk@11 maven
+brew install openjdk@25 maven
 ```
 
 #### Windows
 
-1. **Install JDK 11+:**
+1. **Install JDK 25:**
    - Download from [Oracle](https://www.oracle.com/java/technologies/downloads/) or [Adoptium](https://adoptium.net/)
-   - Add to PATH: `C:\Program Files\Java\jdk-11\bin`
+   - Add to PATH: `C:\Program Files\Java\jdk-25\bin`
 
 2. **Install Apache Maven:**
    - Download from [Apache Maven](https://maven.apache.org/download.cgi)
@@ -116,7 +115,7 @@ brew install openjdk@11 maven
 ### Verify Installation
 
 ```bash
-# Check Java version (should be 11 or higher)
+# Check Java version (should be 25 or higher)
 java -version
 javac -version
 
@@ -126,7 +125,7 @@ mvn -version
 
 Expected output:
 ```
-openjdk version "11.0.x"
+openjdk version "25"
 Apache Maven 3.x.x
 ```
 
@@ -266,7 +265,6 @@ mvn exec:java -pl RCDemoSwing
 - JavaFX 3D scene graph
 - Modern UI framework
 - Cross-platform 3D support
-- Built into Java 8+
 
 **Run:**
 ```bash
@@ -479,7 +477,7 @@ rcsim/
 | Library                              | Version         | Purpose                         |
 |--------------------------------------|-----------------|---------------------------------|
 | Apache Commons Math                  | 3.5             | ODE solvers, linear algebra     |
-| org.scijava j3dcore/j3dutils/vecmath | 1.6.0-scijava-2 | Java3D 3D rendering (J3D demos) |
+| org.jogamp.java3d java3d-core/java3d-utils/vecmath | 1.7.2 | Java3D 3D rendering (J3D demos) |
 | OpenJFX                              | 11.0.2          | 3D scene graph (JFX demo)       |
 | Swing                                | Built-in        | GUI framework                   |
 
@@ -503,10 +501,10 @@ brew install maven
 **Solution**: Install JDK (not just JRE)
 ```bash
 # Ubuntu/Debian
-sudo apt-get install openjdk-11-jdk
+sudo apt-get install openjdk-25-jdk
 
 # macOS
-brew install openjdk@11
+brew install openjdk@25
 ```
 
 **Problem**: Build fails with dependency resolution errors
@@ -521,7 +519,7 @@ mvn clean install -DskipTests
 **Problem**: Java3D demos don't start or crash
 
 **Solution**: Ensure OpenGL support
-- Linux: Install mesa drivers (`sudo apt-get install libgl1-mesa-glx`)
+- Linux: Install mesa drivers (`sudo apt-get install libgl1`)
 - macOS: Should work out of the box
 - Windows: Update graphics drivers
 
@@ -602,7 +600,7 @@ This is an educational project. If you're a student:
 ## Further Reading
 
 - **ODE Integration**: [Apache Commons Math Documentation](https://commons.apache.org/proper/commons-math/userguide/ode.html)
-- **Java3D**: [Java3D Tutorial](https://www.java3d.org/)
+- **Java3D**: [Java3D (jogamp)](https://jogamp.org/java3d/www/)
 - **Hermite Splines**: [Cubic Hermite Spline on Wikipedia](https://en.wikipedia.org/wiki/Cubic_Hermite_spline)
 - **Observer Pattern**: [Design Patterns by Gang of Four](https://refactoring.guru/design-patterns/observer)
 
