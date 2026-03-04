@@ -42,11 +42,10 @@ public abstract class Java3dObserverBase implements Observer<TrackInformation> {
     protected TrackInformation trackInfo;
     protected Track track;
     protected TrackHelperJ3d helper = new TrackHelperJ3d();
+    WorldCreatorJ3d creator = new WorldCreatorJ3d();
 
     TransformGroup createWorld() {
         // Setup the branch group
-        WorldCreatorJ3d creator = new WorldCreatorJ3d();
-        
         TransformGroup worldNode = new TransformGroup();
         
         TransformGroup trackGroup = creator.createTrack(trackInfo);
@@ -74,9 +73,7 @@ public abstract class Java3dObserverBase implements Observer<TrackInformation> {
         Vector3d currentPos = helper.getPosition(track, s);
         RHS<Vector3d> rhs = helper.getRHS(track, s);
         
-        WorldCreatorJ3d creator = new WorldCreatorJ3d();
         creator.setCarState(car, currentPos, rhs);
-        
     }
 
     static final List<CameraFactory.CameraType> camList = new ArrayList<>();

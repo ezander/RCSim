@@ -196,11 +196,13 @@ public class TimeStepper {
      * Reverses the simulation flow of time.
      * 
      * Note: not all simulations might like this, but want the time value only 
-     * to increase.
+     * to increase. Does not necessarily reverse the physical time flow correctly
+     * e.g. if you have dissipation and reverse the time flow, you should *gain*
+     * energy from friction, not lose it.
      */
     public void reverse() {
         step();
-        simSpeed -= simSpeed;
+        simSpeed = -simSpeed;
     }
 
     /**
