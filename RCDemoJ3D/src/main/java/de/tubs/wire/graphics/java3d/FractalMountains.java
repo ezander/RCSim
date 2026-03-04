@@ -44,42 +44,40 @@ public class FractalMountains extends Shape3D {
     final double dx = 8*nnn;
     final double dy = 8*nnn;
     final int div = 512/nnn;
-    int N = div + 1, M = div + 1;
+    int N = div + 1;
 
 
 
     public FractalMountains() {
         
         N = ((N + div - 1) / div) * div + 1;
-        M = ((M + div - 1) / div) * div + 1;
 
         //final int N = 3, M = 4;
-        double xpos[] = new double[M];
+        double xpos[] = new double[N];
         double ypos[] = new double[N];
-        double zpos[][] = new double[M][N];
 
-        for (int i = 0; i < M; i++) {
-            xpos[i] = (i - 0.5 * M) * dx;
+        for (int i = 0; i < N; i++) {
+            xpos[i] = (i - 0.5 * N) * dx;
         }
         for (int j = 0; j < N; j++) {
             ypos[j] = (j - 0.5 * N) * dy;
         }
 
 
-    
+
         TerrainGenerator gen = new DiamonSquareGenerator();
-        zpos = gen.generate(N);
+        double zpos[][] = gen.generate(N);
         final double maxHeight = DiamonSquareGenerator.max(zpos);
         final double zshift = -maxHeight - 220;
-        for (int i = 0; i < M; i += 1)
+        for (int i = 0; i < N; i += 1)
             for (int j = 0; j < N; j += 1)
                 zpos[i][j] += zshift;
 
-        Point3d coords[][] = new Point3d[M][N];
-        Color3f colors[][] = new Color3f[M][N];
+        Point3d coords[][] = new Point3d[N][N];
+        Color3f colors[][] = new Color3f[N][N];
 
         double min = zpos[0][0], max = zpos[0][0];
-        for (int i = 0; i < M; i += 1) {
+        for (int i = 0; i < N; i += 1) {
             for (int j = 0; j < N; j += 1) {
                 //zpos[i][j] = 2 * (zpos[i][j] - zshift) + zshift;
                 min = Math.min(min, zpos[i][j]);
@@ -87,19 +85,22 @@ public class FractalMountains extends Shape3D {
             }
         }
         System.out.format("min %s  max %s\n", min, max);
-        for (int i = 0; i < M; i++) {
+        for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 coords[i][j] = new Point3d(xpos[i], ypos[j], zpos[i][j]);
-                float c;
-                c = (float) ((zpos[i][j] - min) / (max - min));
+                float c = (float) ((zpos[i][j] - min) / (max - min));
                 c = Math.max(c, 0.2f);
-                colors[i][j] = new Color3f(c+0.3f, c, c);
-                
-                //colors[i][j] = new Color3f(0,0,0);
+                float r = c + 0.3f;
+                //float g = (i==0 || i==N-1) ? 0.8f : c;
+                //float b = (j==0 || j==N-1) ? 0.8f : c;
+                float g = (i==N/2) ? 0.8f : c;
+                float b = (j==N/2) ? 0.8f : c;
+
+                colors[i][j] = new Color3f(r, g, b);
             }
         }
 
-        makeGeometry2(M, N, coords, colors);
+        makeGeometry2(N, N, coords, colors);
     }
 
     static <Type> void convertToQuads(int M, int N, Type in[][], Type out[]) {
@@ -216,6 +217,7 @@ public class FractalMountains extends Shape3D {
         plane.setCoordinates(0, coordsQuad);
         plane.setCoordinateIndices(0, indicesQuad);
         plane.setColors(0, colorsQuad);
+        plane.setColorIndices(0, indicesQuad);
         //assert(false);
 //        GeometryInfo gi = new GeometryInfo(GeometryInfo.QUAD_ARRAY);
 //        gi.setCoordinates(coordsQuad);

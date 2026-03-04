@@ -140,7 +140,7 @@ public class Java3dObserverMulti extends Java3dObserverBase {
             view.addCanvas3D(canvas);
             view.setPhysicalBody(new PhysicalBody());
             view.setPhysicalEnvironment(new PhysicalEnvironment());
-            view.setBackClipDistance(1000);
+            view.setBackClipDistance(10000);
             view.setSceneAntialiasingEnable(true);
             //assert canvas.getSceneAntialiasingAvailable();
 

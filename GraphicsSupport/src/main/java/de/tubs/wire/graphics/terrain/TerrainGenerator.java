@@ -67,7 +67,7 @@ public abstract class TerrainGenerator {
                     j += N;
                 }
                 while (j >= N) {
-                    j += N;
+                    j -= N;
                 }
             }
             if (i >= 0 && i < M && j >= 0 && j < N) {
